@@ -1,16 +1,21 @@
 let nixpkgs = import <nixpkgs> {};
-    python38Packages = nixpkgs.python38Packages;
-in nixpkgs.mkShell {
+
     name = "slack-emoji-scraper";
+    pythonAttr = "python38";
+
+    python = nixpkgs."${pythonAttr}Full";
+    pythonPackages = nixpkgs."${pythonAttr}Packages";
+in nixpkgs.mkShell {
+    name = name;
     buildInputs = [
-        nixpkgs.python38Full
-        python38Packages.pip
+        python
+        pythonPackages.pip
     ];
 
     shellHook = "
         unset SOURCE_DATE_EPOCH
-        export PIP_PREFIX=\"/tmp/slack-emoji-scraper/pip_packages\"
+        export PIP_PREFIX=\"/tmp/${name}/pip_packages\"
         export PATH=\"$PIP_PREFIX/bin:$PATH\"
-        export PYTHONPATH=\"$PIP_PREFIX/lib/python3.8/site-packages:$PYTHONPATH\"
+        export PYTHONPATH=\"$PIP_PREFIX/lib/python$(python --version | grep -o '[0-9]\\.[0-9]')/site-packages:$PYTHONPATH\"
     ";
 }

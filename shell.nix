@@ -1,6 +1,4 @@
 let nixpkgs = import <nixpkgs> {};
-
-    stdenv = nixpkgs.stdenv;
     python38Packages = nixpkgs.python38Packages;
 in nixpkgs.mkShell {
     name = "slack-emoji-scraper";

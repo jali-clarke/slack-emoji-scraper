@@ -1,7 +1,7 @@
 let mkVenvShell = import(
         builtins.fetchGit {
             url = "https://github.com/jali-clarke/mkVenvShell.git";
-            ref = "1.2.0";
+            ref = "refs/tags/1.2.0";
         }
     );
 in mkVenvShell {
